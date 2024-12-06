@@ -25,4 +25,4 @@ COPY . .
 EXPOSE 8000
 
 # Step 8: Set the default command to run the FastAPI app
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "$PORT"]

@@ -1,7 +1,8 @@
 # Use Python slim base image
 FROM python:3.9-slim
 
-# Install necessary dependencies
+RUN apt-get update && apt-get install -y chromium
+# Install system dependencies for Chromium
 RUN apt-get update && apt-get install -y \
     wget \
     curl \
@@ -20,16 +21,8 @@ RUN apt-get update && apt-get install -y \
     libx11-6 \
     libgbm1 \
     libasound2 \
-    libnss3 \
-    libatk1.0-0 \
     --no-install-recommends \
-    && rm -rf /var/lib/apt/lists/* \
-    # Download and install Google Chrome
-    && wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - \
-    && DISTRO=$(lsb_release -c | awk '{print $2}') \
-    && echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" | tee -a /etc/apt/sources.list.d/google-chrome.list \
-    && apt-get update && apt-get install -y google-chrome-stable \
-    && rm -rf /var/lib/apt/lists/*  # Clean up to reduce image size
+    && apt-get clean
 
 # Set the working directory
 WORKDIR /app

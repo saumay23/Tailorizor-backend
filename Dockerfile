@@ -1,7 +1,7 @@
 # Use Python slim base image
 FROM python:3.9-slim
 
-# Install system dependencies for Chromium
+# Install system dependencies for Chromium and Pyppeteer
 RUN apt-get update && apt-get install -y \
     wget \
     curl \
@@ -21,7 +21,6 @@ RUN apt-get update && apt-get install -y \
     libgbm1 \
     libasound2 \
     chromium \
-
     --no-install-recommends \
     && apt-get clean
 

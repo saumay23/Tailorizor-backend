@@ -1,9 +1,8 @@
 # Use Python slim base image
 FROM python:3.9-slim
 
-RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O /tmp/google-chrome.deb && \
-    apt-get update && apt-get install -y /tmp/google-chrome.deb && \
-    rm /tmp/google-chrome.deb
+
+
 # Install system dependencies for Chromium
 RUN apt-get update && apt-get install -y \
     wget \
@@ -25,6 +24,12 @@ RUN apt-get update && apt-get install -y \
     libasound2 \
     --no-install-recommends \
     && apt-get clean
+
+RUN apt-get update && apt-get install -y wget
+
+RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O /tmp/google-chrome.deb && \
+    apt-get update && apt-get install -y /tmp/google-chrome.deb && \
+    rm /tmp/google-chrome.deb
 
 # Set the working directory
 WORKDIR /app

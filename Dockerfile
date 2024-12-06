@@ -1,7 +1,7 @@
 # Use Python slim base image
 FROM python:3.9-slim
 
-# Install system dependencies for Chromium and Pyppeteer
+# Install necessary system dependencies including Chromium
 RUN apt-get update && apt-get install -y \
     wget \
     curl \
@@ -20,9 +20,9 @@ RUN apt-get update && apt-get install -y \
     libx11-6 \
     libgbm1 \
     libasound2 \
-    chromium \
+    chromium-browser \
     --no-install-recommends \
-    && apt-get clean
+    && rm -rf /var/lib/apt/lists/*  # Clean up to reduce image size
 
 # Set the working directory
 WORKDIR /app

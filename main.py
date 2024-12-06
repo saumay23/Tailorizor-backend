@@ -5,7 +5,6 @@ from pydantic import BaseModel
 from fastapi.responses import StreamingResponse
 from pyppeteer import launch
 import io
-import chromium
 app = FastAPI()
 
 # Allow CORS for frontend running on localhost:3000

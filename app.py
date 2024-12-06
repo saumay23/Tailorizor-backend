@@ -27,6 +27,10 @@ async def generate_pdf_from_html(html: str) -> bytes:
     await browser.close()
     return pdf_buffer
 
+@app.get("/")
+def read_root():
+    return {"message": "Hello, FastAPI!"}
+
 @app.post("/generate-pdf")
 async def generate_pdf(data: HTMLData):
     try:

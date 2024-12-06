@@ -5,7 +5,7 @@ from pydantic import BaseModel
 from fastapi.responses import StreamingResponse
 from pyppeteer import launch
 import io
-
+import chromium
 app = FastAPI()
 
 # Allow CORS for frontend running on localhost:3000
@@ -21,7 +21,8 @@ class HTMLData(BaseModel):
     html: str
 
 async def generate_pdf_from_html(html: str) -> bytes:
-    browser = await launch(headless=True, args=['--no-sandbox'],executablePath='/usr/bin/chromium')
+    executable_path = '/usr/bin/google-chrome-stable'
+    browser = await launch(headless=True, args=['--no-sandbox'],executablePath=executable_path)
     page = await browser.newPage()
     await page.setContent(html)
     pdf_buffer = await page.pdf(format='A4')

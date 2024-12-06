@@ -20,6 +20,8 @@ RUN apt-get update && apt-get install -y \
     libx11-6 \
     libgbm1 \
     libasound2 \
+    chromium \
+
     --no-install-recommends \
     && apt-get clean
 

@@ -1,10 +1,8 @@
-# Use Python slim base image
+# Use a slim Python base image for efficiency
 FROM python:3.9-slim
 
-
-
-# Install system dependencies for Chromium
-RUN apt-get update && apt-get install -y \
+# Install system dependencies required for Chromium
+RUN apt-get update && apt-get install -y --no-install-recommends \
     wget \
     curl \
     ca-certificates \
@@ -22,27 +20,24 @@ RUN apt-get update && apt-get install -y \
     libx11-6 \
     libgbm1 \
     libasound2 \
-    --no-install-recommends \
-    && apt-get clean
+    && rm -rf /var/lib/apt/lists/*
 
-RUN apt-get update && apt-get install -y wget
-
+# Download and install Google Chrome
 RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O /tmp/google-chrome.deb && \
     apt-get update && apt-get install -y /tmp/google-chrome.deb && \
-    rm /tmp/google-chrome.deb
+    rm -rf /var/lib/apt/lists/* /tmp/google-chrome.deb
 
 # Set the working directory
 WORKDIR /app
 
-# Copy the application code into the container
+# Copy application code into the container
 COPY . .
 
-# Install the required Python packages
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+# Install Python dependencies
+RUN pip install --no-cache-dir --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
-# Expose the port FastAPI app will be running on
+# Expose the port FastAPI app will run on (default: 8000)
 EXPOSE 8000
 
-# Command to run the FastAPI app
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "$PORT"]
+# Run the FastAPI app with Uvicorn, respecting the $PORT environment variable
+CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}"]

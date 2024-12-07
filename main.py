@@ -62,7 +62,7 @@ async def generate_pdf(data: HTMLData):
 
 
 @app.post("/resume-tailor")
-async def resume_tailor(resume:ResumeType,jd:str):
+async def resume_tailor(resume:object,jd:str):
     try:
         
         AI_KEY=os.getenv('AI_KEY')

@@ -10,7 +10,7 @@ app = FastAPI()
 # Allow CORS for frontend running on localhost:3000
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Frontend origin
+    allow_origins=["http://localhost:3000","https://tailorizor.vercel.app/"],  # Frontend origin
     allow_credentials=True,
     allow_methods=["*"],  # Allow all HTTP methods
     allow_headers=["*"],  # Allow all HTTP headers
@@ -24,7 +24,7 @@ async def generate_pdf_from_html(html: str) -> bytes:
     browser = await launch(headless=True, args=['--no-sandbox'],executablePath=executable_path)
     page = await browser.newPage()
     await page.setContent(html)
-    pdf_buffer = await page.pdf(format=None)
+    pdf_buffer = await page.pdf(format='A4')
     await browser.close()
     return pdf_buffer
 

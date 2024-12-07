@@ -10,7 +10,7 @@ app = FastAPI()
 # Allow CORS for frontend running on localhost:3000
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000","https://tailorizor.vercel.app"],  # Frontend origin
+    allow_origins=["http://localhost:3000"],  # Frontend origin
     allow_credentials=True,
     allow_methods=["*"],  # Allow all HTTP methods
     allow_headers=["*"],  # Allow all HTTP headers

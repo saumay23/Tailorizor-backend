@@ -24,7 +24,12 @@ async def generate_pdf_from_html(html: str) -> bytes:
     browser = await launch(headless=True, args=['--no-sandbox'],executablePath=executable_path)
     page = await browser.newPage()
     await page.setContent(html)
-    pdf_buffer = await page.pdf(format='A4')
+    pdf_buffer = await page.pdf(format='A4',margin={
+            'top': '0.7in',
+            'right': '0.5in',
+            'bottom': '0.5in',
+            'left': '0.5in'
+        })
     await browser.close()
     return pdf_buffer
 
